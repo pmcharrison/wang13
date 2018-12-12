@@ -90,6 +90,7 @@ shiny_ui_sidebar <- function() {
               style = "padding-left: 20px"),
     shinydashboard::sidebarMenu(
       lapply(c(
+        "About",
         "Input spectrum",
         "Filtered spectrum",
         "Channel waveforms",
@@ -119,6 +120,7 @@ shiny_ui_body <- function(opt) {
 
 shiny_ui_tabs <- function(opt) {
   shinydashboard::tabItems(
+    shiny_ui_tab_0(),
     shiny_ui_tab_1(opt),
     shiny_ui_tab_2(opt),
     shiny_ui_tab_3(opt),
@@ -127,6 +129,29 @@ shiny_ui_tabs <- function(opt) {
     shiny_ui_tab_6(),
     shiny_ui_tab_7(),
     shiny_ui_tab_8()
+  )
+}
+
+shiny_ui_tab_0 <- function() {
+  shinydashboard::tabItem(
+    tabName = "about",
+    shinydashboard::box(
+      # title = "Input spectrum",
+      title = "About",
+      status = "primary",
+      width = 12,
+      shiny::tags$p("This interactive app analyses the roughness of musical chords",
+                    "using Wang et al.'s (2013) algorithm.",
+                    "Use the tabs on the left-hand side of the screen",
+                    "to navigate through the successive stages of the model."),
+      shiny::tags$p("Wang, Y. S., Shen, G. Q., Guo, H., Tang, X. L., & Hamade, T. (2013).",
+                    "Roughness modelling based on human auditory perception for",
+                    "sound quality evaluation of vehicle interior noise.",
+                    shiny::tags$em("Journal of Sound and Vibration"),
+                    "332(16), 3893–3904.",
+                    shiny::tags$a(href = "https://doi.org/10.1016/j.jsv.2013.02.030")
+                    )
+    )
   )
 }
 
