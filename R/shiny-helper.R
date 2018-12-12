@@ -28,7 +28,7 @@ enter_new_chord <- function(text, state, num_harmonics) {
 
 set_chord <- function(chord, state) {
   state$chord <- chord
-  state$chord_img_src <- get_chord_url(chord) %>% print
+  state$chord_img_src <- get_chord_url(chord)
 }
 
 plot_input_spectrum <- function(analysis) {
@@ -170,7 +170,13 @@ shiny_ui_tab_3 <- function() {
       shiny::sliderInput("channel_wave_forms_channel_num",
                          "Channel number",
                          min = 1, max = 47, value = 25, step = 1),
-      shiny::actionButton("play_channel_wave_form", "Play")
+      shiny::fluidRow(
+        shiny::column(6, shiny::actionButton("play_channel_wave_form", "Play",
+                                             style = "text-align: center")),
+        shiny::column(6, shiny::checkboxInput("normalise_volume_across_channels",
+                                              "Normalise volume across channels?",
+                                              value = TRUE))
+      )
     ))
 }
 
@@ -251,7 +257,9 @@ shiny_ui_tab_8 <- function() {
 
 shiny_ui_input <- function(opt) {
   shinydashboard::box(
-    shiny::textInput("chord", label = "Chord", placeholder = "e.g. 60 64 67"),
+    shiny::p("Enter a pitch-class set to anlyse.",
+             "The first pitch class will be taken as the bass note."),
+    shiny::textInput("chord", label = NULL, placeholder = "e.g. 4 0 7"),
     shiny::actionButton("enter_new_chord", "Enter"),
     shiny::uiOutput("current_chord_text"),
     shiny::uiOutput("current_chord_image", height = "auto"),

@@ -9,7 +9,7 @@ wang_app <- function() {
     }
 
   opt <- list(
-    default_chord = hrep::pc_chord(c(0, 4, 7)),
+    default_chord = hrep::pc_chord(c(4, 0, 7)),
     default_num_harmonics = 11,
     default_include_phase_impact_factors = FALSE,
     fundamental_dB = 60
@@ -24,18 +24,14 @@ wang_app <- function() {
   server <- function(input, output) {
     state <- shiny::reactiveValues(
       chord = opt$default_chord,
-      chord_img_src = get_chord_url(opt$default_chord),
-      analysis = analyse_chord(x = opt$default_chord,
-                               opt$default_include_phase_impact_factors,
-                               opt$fundamental_dB,
-                               opt$default_num_harmonics)
+      analysis = NULL
     )
     output$current_chord_text <- shiny::renderUI(
       shiny::tags$p("Current chord: ",
                     shiny::tags$strong(as.character(state$chord)))
     )
     output$current_chord_image <- shiny::renderUI(
-      shiny::img(src = state$chord_img_src,
+      shiny::img(src = get_chord_url(state$chord),
                  contentType = 'image/png',
                  alt = "Current chord",
                  style = paste("max-width: 150px;",
@@ -65,7 +61,7 @@ wang_app <- function() {
       play_channel_wave_forms(
         channel_wave_forms = state$analysis$channel_wave_forms,
         channel_num = input$channel_wave_forms_channel_num,
-        scale_to_other_channels = FALSE
+        scale_to_other_channels = input$normalise_volume_across_channels
       )
     })
 
@@ -100,11 +96,15 @@ wang_app <- function() {
     output$plot_specific_roughnesses <- shiny::renderPlot(
       plot_specific_roughnesses_wang(state$analysis$specific_roughnesses))
 
-    output$total_roughness <- shiny::renderUI(
+    output$total_roughness <- shiny::renderUI({
+      x <- round(state$analysis$total_roughness, digits = 5)
+      shiny::showNotification(shiny::p("Roughness:", shiny::strong(x)),
+                              type = "message",
+                              duration = 120)
       shiny::p("Output:",
-               shiny::strong(state$analysis$total_roughness %>%
-                               round(digits = 5)),
-               style = "padding: 15px; font-size: 12pt"))
+               shiny::strong(x),
+               style = "padding: 15px; font-size: 12pt")
+    })
   }
 
   # Run the application
