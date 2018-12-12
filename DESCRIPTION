@@ -23,3 +23,4 @@ Suggests:
     shinydashboard
 RdMacros: Rdpack
 RoxygenNote: 6.1.0
+Remotes: pmcharrison/hrep
