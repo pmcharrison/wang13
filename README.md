@@ -28,6 +28,7 @@ library(wang13)
 roughness_wang(frequency_Hz = c(261.6, 523.3),
                level_dB = c(60, 60))
 #> [1] 0.008891381
+
 # Semitone
 roughness_wang(frequency_Hz = c(261.6, 277.2),
                level_dB = c(60, 60))

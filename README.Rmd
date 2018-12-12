@@ -37,6 +37,7 @@ library(wang13)
 # Octave
 roughness_wang(frequency_Hz = c(261.6, 523.3),
                level_dB = c(60, 60))
+
 # Semitone
 roughness_wang(frequency_Hz = c(261.6, 277.2),
                level_dB = c(60, 60))
