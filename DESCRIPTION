@@ -1,0 +1,18 @@
+Package: wang13
+Title: Implementation of Wang et al.'s (2013) Roughness Model
+Version: 0.0.0.9000
+Authors@R: person("Peter", "Harrison", email = "pmc.harrison@gmail.com", role = c("aut", "cre"))
+Description: Implements Wang et al.'s (2013) roughness model.
+Depends: R (>= 3.5.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    magrittr,
+    hht,
+    assertthat,
+    hrep,
+    purrr
+Suggests:
+    tuneR,
+    ggplot2
