@@ -32,7 +32,7 @@ demo_wang <- function(audio = TRUE) {
 
   ui <- shinydashboard::dashboardPage(
     shinydashboard::dashboardHeader(title = "Wang et al. (2013)",
-                                    disable = TRUE),
+                                    disable = FALSE),
     shiny_ui_sidebar(),
     shiny_ui_body(opt)
   )
