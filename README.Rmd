@@ -31,6 +31,17 @@ devtools::install_github("wang13")
 
 Higher scores correspond to greater roughness. 
 
+```{r}
+library(wang13)
+
+# Octave
+roughness_wang(frequency_Hz = c(261.6, 523.3),
+               level_dB = c(60, 60))
+# Semitone
+roughness_wang(frequency_Hz = c(261.6, 277.2),
+               level_dB = c(60, 60))
+```
+
 ## References
 
 Wang, Y. S., Shen, G. Q., Guo, H., Tang, X. L., & Hamade, T. (2013). Roughness modelling based on human auditory perception for sound quality evaluation of vehicle interior noise. Journal of Sound and Vibration, 332(16), 3893–3904. https://doi.org/10.1016/j.jsv.2013.02.030

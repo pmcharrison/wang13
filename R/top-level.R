@@ -8,7 +8,7 @@
 #' @param include_phase_impact_factors (Logical scalar)
 #' Whether to include phase impact factors in roughness computation.
 #' Set to \code{TRUE} to recover the original specifications of Wang et al. (2013).
-#' However, disabling this feature (by setting the parameter to \code{FALSE})
+#' However, disabling this feature (by leaving the parameter at \code{FALSE})
 #' seems to result in better estimation of perceptual consonance.
 #' @param msg Function to be called to give progress updates.
 #' This function should accept three arguments:
@@ -29,7 +29,7 @@ roughness_wang <- function(
   frequency_Hz,
   level_dB,
   detail = FALSE,
-  include_phase_impact_factors = TRUE,
+  include_phase_impact_factors = FALSE,
   msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ", msg)
 ) {
   assertthat::assert_that(length(frequency_Hz) == length(level_dB))
