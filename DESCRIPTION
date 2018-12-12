@@ -15,4 +15,8 @@ Imports:
     purrr
 Suggests:
     tuneR,
-    ggplot2
+    ggplot2,
+    cowplot,
+    shiny,
+    shinyjs,
+    shinydashboard

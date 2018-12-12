@@ -1,7 +1,7 @@
 compile_detail <- function(x) {
   x$spectrum_input <- data.frame(frequency_Hz = x$frequency_Hz,
                                  level_dB = x$level_dB)
-  x$spectrum_after_ear_filtering <- data.frame(x$frequency_Hz,
+  x$spectrum_after_ear_filtering <- data.frame(frequency_Hz = x$frequency_Hz,
                                                level_dB = x$level_dB_filtered)
   x[c(
     "spectrum_input",

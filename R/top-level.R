@@ -37,9 +37,9 @@ roughness_wang <- function(
                                             .y = channel_envelopes,
                                             .f = filter_channel_envelope)
 
-  modulation_indices <- purrr::map2(.x = filtered_channel_envelopes,
-                                    .y = channel_wave_forms,
-                                    .f = get_modulation_index)
+  modulation_indices <- purrr::map2_dbl(.x = filtered_channel_envelopes,
+                                        .y = channel_wave_forms,
+                                        .f = get_modulation_index)
 
   phase_impact_factors <- purrr::map_dbl(.x = seq_len(47),
                                          .f = get_phase_impact_factor,
