@@ -13,11 +13,11 @@ get_channel_sound_excitation_levels <- function(frequency_Hz,
   )
 }
 
-#' @param freq_Hz Frequency in Hz (numeric vector)
-#' @param freq_bark Corresponding frequency in barks (numeric vector)
-#' @param sound_intensity_level Sound intensity level (numeric vector, matches with freq_Hz)
-#' @param channel_num Critical band filter number (should be a scalar integer between 1 and 47)
-#' @return Numeric vector giving the excitation level for the respective channel for each frequency listed in \code{freq_Hz}
+# @param freq_Hz Frequency in Hz (numeric vector)
+# @param freq_bark Corresponding frequency in barks (numeric vector)
+# @param sound_intensity_level Sound intensity level (numeric vector, matches with freq_Hz)
+# @param channel_num Critical band filter number (should be a scalar integer between 1 and 47)
+# @return Numeric vector giving the excitation level for the respective channel for each frequency listed in \code{freq_Hz}
 get_channel_sound_excitation_level <- function(freq_Hz,
                                                freq_bark,
                                                sound_intensity_level,
@@ -149,16 +149,16 @@ get_channel_weight <- function(channel_num) {
   )$y
 }
 
-#' Get ear transmission coefficients
-#'
-#' Gets ear transmission coefficients according to Figure 3 of Wang et al. (2013).
-#' This is a linear approximation to the graph provided in the paper
-#' (the paper does not provide an equation for the curve, unfortunately).
-#' @param freq Numeric vector of frequencies
-#' @return Numeric vector of ear transmission coefficients.
-#' These coefficients describe a filter that can be applied to incoming spectra
-#' to simulate the filtering of the ear.
-#' \insertRef{Wang2013}{incon}
+# Get ear transmission coefficients
+#
+# Gets ear transmission coefficients according to Figure 3 of Wang et al. (2013).
+# This is a linear approximation to the graph provided in the paper
+# (the paper does not provide an equation for the curve, unfortunately).
+# @param freq Numeric vector of frequencies
+# @return Numeric vector of ear transmission coefficients.
+# These coefficients describe a filter that can be applied to incoming spectra
+# to simulate the filtering of the ear.
+# \insertRef{Wang2013}{incon}
 ear_transmission <- function(freq) {
   log_freq <- log(freq, base = 10)
   ifelse(
@@ -190,7 +190,7 @@ get_critical_bandwidth <- function(freq_Hz) {
   ifelse(freq_Hz < 500, 100, freq_Hz / 5)
 }
 
-#' Figure 5 of Wang et al.
+# Figure 5 of Wang et al.
 envelope_weight <- function(freq_Hz, channel_num) {
   assertthat::assert_that(
     is.numeric(freq_Hz),

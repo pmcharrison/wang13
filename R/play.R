@@ -16,7 +16,7 @@ play_channel_wave_forms <- function(channel_wave_forms,
                  ...)
 }
 
-#' @export
+
 play_wave_form <- function(x,
                            sample_rate = 44e3,
                            fade_samples = 1e3,
@@ -39,7 +39,7 @@ play_wave_form <- function(x,
   tuneR::play(tuneR::Wave(u, samp.rate = sample_rate, bit = bit), "play")
 }
 
-#' @export
+
 play_sparse_spectrum <- function(
   frequency,
   amplitude,
@@ -51,7 +51,7 @@ play_sparse_spectrum <- function(
   play_wave_form(sample_rate = sample_rate, ...)
 }
 
-#' Note: this could be done more efficiently with ifft
+# Note: this could be done more efficiently with ifft
 sparse_spectrum_to_waveform <- function(
   frequency,
   amplitude,

@@ -1,4 +1,15 @@
-wang_app <- function() {
+#' Wang et al. (2013) interactive demo
+#'
+#' Launches an interactive demo of Wang et al.'s (2013) roughness model.
+#' This function requires a few additional packages to be installed;
+#' you will be notified if any of these packages are missing
+#' once you run \code{demo_wang()}.
+#' @note The demo takes the form of an Shiny app
+#' (\url{https://shiny.rstudio.com/}).
+#' @references
+#' \insertRef{Wang2013}{wang13}
+#' @export
+demo_wang <- function() {
   pkg_suggest <- c("cowplot", "shiny", "shinyjs", "shinydashboard")
   purrr::map_lgl(pkg_suggest, requireNamespace) %>%
     {

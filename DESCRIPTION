@@ -12,7 +12,8 @@ Imports:
     hht,
     assertthat,
     hrep,
-    purrr
+    purrr,
+    Rdpack
 Suggests:
     tuneR,
     ggplot2,
@@ -20,3 +21,5 @@ Suggests:
     shiny,
     shinyjs,
     shinydashboard
+RdMacros: Rdpack
+RoxygenNote: 6.1.0

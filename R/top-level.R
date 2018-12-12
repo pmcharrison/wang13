@@ -1,16 +1,35 @@
-#' Spectral roughness (Wang)
+#' Wang et al.'s (2013) roughness model
 #'
-#' Gets the roughness of a spectrum according to the model of Wang et al. (2013).
-#' @param frequency_Hz Numeric vector of frequencies (Hz)
-#' @param level_dB Numeric vector of sound levels (dB)
-#' @return Numeric vector of roughnesses
-#' \insertRef{Wang2013}{incon}
+#' Gets the roughness of an acoustic spectrum according to the model of Wang et al. (2013).
+#' @param frequency_Hz (Numeric vector) Input frequencies (Hz).
+#' @param level_dB (Numeric vector) Input sound levels (dB), of the same length as
+#' \code{frequency_Hz}.
+#' @param detail (Logical scalar) Whether to return detailed output information.
+#' @param include_phase_impact_factors (Logical scalar)
+#' Whether to include phase impact factors in roughness computation.
+#' Set to \code{TRUE} to recover the original specifications of Wang et al. (2013).
+#' However, disabling this feature (by setting the parameter to \code{FALSE})
+#' seems to result in better estimation of perceptual consonance.
+#' @param msg Function to be called to give progress updates.
+#' This function should accept three arguments:
+#' \code{n}, an integer identifying the current position in the pipeline,
+#' \code{N}, an integer identifying the length of the pipeline,
+#' and \code{msg}, a string providing a longer-format description
+#' of the current position in the pipeline.
+#' @return If \code{detail == FALSE}, a numeric vector of roughnesses,
+#' otherwise a list containing detailed algorithm output.
+#' @references
+#' \insertRef{Wang2013}{wang13}
+#' @note
+#' This implementation is designed for sparse input spectra, that is,
+#' when \code{frequency_Hz} and \code{level_dB} are both relatively
+#' short vectors.
 #' @export
 roughness_wang <- function(
   frequency_Hz,
   level_dB,
   detail = FALSE,
-  include_phase_impact_factors = FALSE,
+  include_phase_impact_factors = TRUE,
   msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ", msg)
 ) {
   assertthat::assert_that(length(frequency_Hz) == length(level_dB))
