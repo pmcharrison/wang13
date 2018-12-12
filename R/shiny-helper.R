@@ -86,6 +86,8 @@ analyse_chord <- function(x,
 shiny_ui_sidebar <- function() {
   shinydashboard::dashboardSidebar(
     shinyjs::useShinyjs(),
+    shiny::h4("Wang et al. (2013)",
+              style = "padding-left: 20px"),
     shinydashboard::sidebarMenu(
       lapply(c(
         "Input spectrum",
@@ -109,17 +111,17 @@ shiny_ui_sidebar <- function() {
 shiny_ui_body <- function(opt) {
   shinydashboard::dashboardBody(
     shiny::fluidRow(
-      shiny::column(6, shiny_ui_tabs()),
+      shiny::column(6, shiny_ui_tabs(opt)),
       shiny::column(6, shiny_ui_input(opt))
     )
   )
 }
 
-shiny_ui_tabs <- function() {
+shiny_ui_tabs <- function(opt) {
   shinydashboard::tabItems(
-    shiny_ui_tab_1(),
-    shiny_ui_tab_2(),
-    shiny_ui_tab_3(),
+    shiny_ui_tab_1(opt),
+    shiny_ui_tab_2(opt),
+    shiny_ui_tab_3(opt),
     shiny_ui_tab_4(),
     shiny_ui_tab_5(),
     shiny_ui_tab_6(),
@@ -128,52 +130,54 @@ shiny_ui_tabs <- function() {
   )
 }
 
-shiny_ui_tab_1 <- function() {
+shiny_ui_tab_1 <- function(opt) {
   shinydashboard::tabItem(
     tabName = "input_spectrum",
     shinydashboard::box(
-      title = "Input spectrum",
+      # title = "Input spectrum",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("This represents the original sound wave."),
+      shiny::tags$p("The input to the model is an acoustic spectrum."),
       shiny::div(shiny::plotOutput("plot_input_spectrum"),
                  style = "max-width: 100%"),
-      shiny::actionButton("play_input_spectrum", "Play")
+      if (opt$audio) shiny::actionButton("play_input_spectrum", "Play")
     )
   )
 }
 
-shiny_ui_tab_2 <- function() {
+shiny_ui_tab_2 <- function(opt) {
   shinydashboard::tabItem(
     tabName = "filtered_spectrum",
     shinydashboard::box(
-      title = "Filtered spectrum",
+      # title = "Filtered spectrum",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("The sound wave is filtered by the mechanisms of the ear."),
+      shiny::tags$p("The spectrum is filtered by the outer and middle ear."),
       shiny::plotOutput("plot_filtered_input_spectrum"),
-      shiny::actionButton("play_filtered_input_spectrum", "Play")
+      if (opt$audio) shiny::actionButton("play_filtered_input_spectrum", "Play")
     )
   )
 }
 
-shiny_ui_tab_3 <- function() {
+shiny_ui_tab_3 <- function(opt) {
   shinydashboard::tabItem(
     tabName = "channel_waveforms",
     shinydashboard::box(
-      title = "Channel waveforms",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("Different critical bands (a.k.a. channels)",
-                    "are excited in different ways."),
+      shiny::tags$p("Different cochlear channels selectively filter",
+                    "for different frequency ranges."),
       shiny::plotOutput("plot_channel_wave_form"),
       shiny::sliderInput("channel_wave_forms_channel_num",
                          "Channel number",
                          min = 1, max = 47, value = 25, step = 1),
-      shiny::fluidRow(
-        shiny::column(6, shiny::actionButton("play_channel_wave_form", "Play",
+      if (opt$audio) shiny::fluidRow(
+        shiny::column(3, shiny::actionButton("play_channel_wave_form", "Play",
                                              style = "text-align: center")),
-        shiny::column(6, shiny::checkboxInput("normalise_volume_across_channels",
+        shiny::column(9, shiny::checkboxInput("normalise_volume_across_channels",
                                               "Normalise volume across channels?",
                                               value = TRUE))
       )
@@ -184,10 +188,11 @@ shiny_ui_tab_4 <- function() {
   shinydashboard::tabItem(
     tabName = "channel_envelopes",
     shinydashboard::box(
-      title = "Channel envelopes",
+      # title = "Channel envelopes",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("We extract the envelopes of the excitation patterns",
+      shiny::tags$p("Waveform envelopes are extracted",
                     "for each channel."),
       shiny::plotOutput("plot_channel_envelope"),
       shiny::sliderInput("channel_envelopes_channel_num", "Channel number",
@@ -199,7 +204,8 @@ shiny_ui_tab_5 <- function() {
   shinydashboard::tabItem(
     tabName = "filtered_channel_envelopes",
     shinydashboard::box(
-      title = "Filtered channel envelopes",
+      # title = "Filtered channel envelopes",
+      title = NULL,
       status = "primary",
       width = 12,
       shiny::tags$p("These amplitude modulations are filtered to prioritise",
@@ -214,12 +220,12 @@ shiny_ui_tab_6 <- function() {
   shinydashboard::tabItem(
     tabName = "modulation_indices",
     shinydashboard::box(
-      title = "Modulation indices",
+      # title = "Modulation indices",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("The modulation index of each channel constitutes",
-                    "the RMS amplitude modulation as a fraction of the",
-                    "RMS amplitude of the total waveform."),
+      shiny::tags$p("The modulation index captures the magnitude of",
+                    "amplitude modulation for each channel."),
       shiny::plotOutput("plot_modulation_indices")
     ))
 }
@@ -228,13 +234,14 @@ shiny_ui_tab_7 <- function() {
   shinydashboard::tabItem(
     tabName = "phase_impact_factors",
     shinydashboard::box(
-      title = "Phase impact factors",
+      # title = "Phase impact factors",
+      title = NULL,
       status = "primary",
       width = 12,
-      shiny::tags$p("Phase impact factors describe the amount of correlation",
-                    "between the envelope of the current critical band and the",
-                    "envelopes of adjacent critical bands. Higher correlation",
-                    "is thought to yield greater roughness."),
+      shiny::tags$p("Phase impact factors capture the correlation between",
+                    "the envelopes of adjacent channels.",
+                    "According to Wang et al. (2013), higher correlations",
+                    "yield greater roughness."),
       shiny::plotOutput("plot_phase_impact_factors")
     ))
 }
@@ -243,7 +250,8 @@ shiny_ui_tab_8 <- function() {
   shinydashboard::tabItem(
     tabName = "specific_roughnesses",
     shinydashboard::box(
-      title = "Specific roughnesses",
+      # title = "Specific roughnesses",
+      title = NULL,
       status = "primary",
       width = 12,
       shiny::tags$p("The roughness contribution of each critical band is",
@@ -257,7 +265,7 @@ shiny_ui_tab_8 <- function() {
 
 shiny_ui_input <- function(opt) {
   shinydashboard::box(
-    shiny::p("Enter a pitch-class set to anlyse.",
+    shiny::p("Enter a pitch-class set to analyse.",
              "The first pitch class will be taken as the bass note."),
     shiny::textInput("chord", label = NULL, placeholder = "e.g. 4 0 7"),
     shiny::actionButton("enter_new_chord", "Enter"),

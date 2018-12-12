@@ -4,12 +4,15 @@
 #' This function requires a few additional packages to be installed;
 #' you will be notified if any of these packages are missing
 #' once you run \code{demo_wang()}.
+#' @param audio (Scalar logical) Whether to enable playback controls
+#' (currently the playback controls don't work when the app is hosted
+#' on a remote server).
 #' @note The demo takes the form of an Shiny app
 #' (\url{https://shiny.rstudio.com/}).
 #' @references
 #' \insertRef{Wang2013}{wang13}
 #' @export
-demo_wang <- function() {
+demo_wang <- function(audio = TRUE) {
   pkg_suggest <- c("cowplot", "shiny", "shinyjs", "shinydashboard")
   purrr::map_lgl(pkg_suggest, requireNamespace) %>%
     {
@@ -23,11 +26,13 @@ demo_wang <- function() {
     default_chord = hrep::pc_chord(c(4, 0, 7)),
     default_num_harmonics = 11,
     default_include_phase_impact_factors = FALSE,
-    fundamental_dB = 60
+    fundamental_dB = 60,
+    audio = audio
   )
 
   ui <- shinydashboard::dashboardPage(
-    shinydashboard::dashboardHeader(title = "Wang et al. (2013)"),
+    shinydashboard::dashboardHeader(title = "Wang et al. (2013)",
+                                    disable = TRUE),
     shiny_ui_sidebar(),
     shiny_ui_body(opt)
   )
