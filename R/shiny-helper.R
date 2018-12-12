@@ -17,9 +17,12 @@ format_chord <- function(x) {
 
 enter_new_chord <- function(text, state, num_harmonics) {
   tryCatch({
-    chord <- strsplit(text, " ")[[1]] %>% (hrep::pc_chord)
-    set_chord(chord, state, num_harmonics)
+    set_chord(hrep::pc_chord(text),
+              state,
+              num_harmonics)
   }, error = function(e){
+    message("Call: ", capture.output(e$call))
+    message("Message: ", e$message)
     shinyjs::alert("Invalid chord")
   })
 }

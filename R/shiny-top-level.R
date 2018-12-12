@@ -16,76 +16,115 @@ wang_app <- function() {
   )
 
   ui <- shinydashboard::dashboardPage(
-    shinydashboard::dashboardHeader(title = "Wang et al. roughness model"),
+    shinydashboard::dashboardHeader(title = "Wang et al. (2013)"),
     shinydashboard::dashboardSidebar(
       shinyjs::useShinyjs(),
-      shiny::div(
-        shiny::textInput("chord", label = "Chord", placeholder = "e.g. 60 64 67"),
-        shiny::actionButton("enter_new_chord", "Enter"),
-        shiny::uiOutput("current_chord_text"),
-        shiny::uiOutput("current_chord_image", height = "auto"),
-        shiny::checkboxInput("include_phase_impact_factors",
-                             "Include phase impact factors",
-                             value = opt$default_include_phase_impact_factors),
-        shiny::sliderInput("num_harmonics", "Number of harmonics",
-                           value = opt$default_num_harmonics,
-                           min = 1, max = 15, step = 1),
-        shinydashboard::infoBoxOutput("total_roughness"),
-        style = "text-align: center"
+      shinydashboard::sidebarMenu(
+        shinydashboard::menuItem("Input spectrum",
+                                 tabName = "input_spectrum",
+                                 icon = icon("dashboard")),
+        shinydashboard::menuItem("Filtered spectrum",
+                                 icon = icon("th"),
+                                 tabName = "filtered_spectrum",
+                                 badgeLabel = "new", badgeColor = "green"),
+        shiny::uiOutput("total_roughness")
       )
     ),
     shinydashboard::dashboardBody(
-      shiny::fluidRow(shinydashboard::box(
-        title = "Input spectrum", status = "primary",
-        shiny::tags$p("This represents the original sound wave."),
-        shiny::plotOutput("plot_input_spectrum"),
-        shiny::actionButton("play_input_spectrum", "Play")
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Filtered spectrum", status = "primary",
-        shiny::tags$p("The sound wave is filtered by the mechanisms of the ear."),
-        shiny::plotOutput("plot_filtered_input_spectrum"),
-        shiny::actionButton("play_filtered_input_spectrum", "Play")
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Channel waveforms", status = "primary",
-        shiny::tags$p("Different critical bands (a.k.a. channels) are excited in different ways."),
-        shiny::plotOutput("plot_channel_wave_form"),
-        shiny::sliderInput(inputId = "channel_wave_forms_channel_num", "Channel number",
-                           min = 1, max = 47, value = 25, step = 1),
-        shiny::actionButton("play_channel_wave_form", "Play")
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Channel envelopes", status = "primary",
-        shiny::tags$p("We extract the envelopes of the excitation patterns for each channel."),
-        shiny::plotOutput("plot_channel_envelope"),
-        shiny::sliderInput(inputId = "channel_envelopes_channel_num", "Channel number",
-                           min = 1, max = 47, value = 25, step = 1)
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Filtered channel envelopes", status = "primary",
-        shiny::tags$p("These amplitude modulations are filtered to prioritise the modulation frequencies that contribute most towards roughness."),
-        shiny::plotOutput("plot_filtered_channel_envelope"),
-        shiny::sliderInput(inputId = "filtered_channel_envelopes_channel_num", "Channel number",
-                    min = 1, max = 47, value = 25, step = 1)
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Modulation indices", status = "primary",
-        shiny::tags$p("The modulation index of each channel constitutes the RMS amplitude modulation as a fraction of the RMS amplitude of the total waveform."),
-        shiny::plotOutput("plot_modulation_indices")
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Phase impact factors", status = "primary",
-        shiny::tags$p("Phase impact factors describe the amount of correlation between the envelope of the current critical band and the envelopes of adjacent critical bands. Higher correlation is thought to yield greater roughness."),
-        shiny::plotOutput("plot_phase_impact_factors")
-      )),
-      shiny::fluidRow(shinydashboard::box(
-        title = "Specific roughnesses", status = "primary",
-        shiny::tags$p("The roughness contribution of each critical band is estimated as a function of modulation index, phase impact factor, and pitch height of the critical band. These are then summed to give the total roughness value."),
-        shiny::plotOutput("plot_specific_roughnesses")
-      ))
+      shiny::fluidRow(
+        shiny::column(
+          6,
+          shinydashboard::tabItems(
+            shinydashboard::tabItem(
+              tabName = "input_spectrum",
+              shinydashboard::box(
+                title = "Input spectrum", status = "primary",
+                width = 12,
+                shiny::tags$p("This represents the original sound wave."),
+                shiny::plotOutput("plot_input_spectrum"),
+                shiny::actionButton("play_input_spectrum", "Play")
+              )
+            ),
+            shinydashboard::tabItem(
+              tabName = "filtered_spectrum",
+              shiny::h2("Filtered spectrum"),
+              shiny::tags$p("The sound wave is filtered by the mechanisms of the ear."),
+              shiny::plotOutput("plot_filtered_input_spectrum"),
+              shiny::actionButton("play_filtered_input_spectrum", "Play")
+            )
+          )),
+        shiny::column(
+          6,
+          shinydashboard::box(
+            shiny::textInput("chord", label = "Chord", placeholder = "e.g. 60 64 67"),
+            shiny::actionButton("enter_new_chord", "Enter"),
+            shiny::uiOutput("current_chord_text"),
+            shiny::uiOutput("current_chord_image", height = "auto"),
+            shiny::checkboxInput("include_phase_impact_factors",
+                                 "Include phase impact factors",
+                                 value = opt$default_include_phase_impact_factors),
+            shiny::sliderInput("num_harmonics", "Number of harmonics",
+                               value = opt$default_num_harmonics,
+                               min = 1, max = 15, step = 1),
+            style = "text-align: center"
+          )
+        )
+      )
     )
+
+
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Input spectrum", status = "primary",
+    #   shiny::tags$p("This represents the original sound wave."),
+    #   shiny::plotOutput("plot_input_spectrum"),
+    #   shiny::actionButton("play_input_spectrum", "Play")
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Filtered spectrum", status = "primary",
+    #   shiny::tags$p("The sound wave is filtered by the mechanisms of the ear."),
+    #   shiny::plotOutput("plot_filtered_input_spectrum"),
+    #   shiny::actionButton("play_filtered_input_spectrum", "Play")
+    # )),
+
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Channel waveforms", status = "primary",
+    #   shiny::tags$p("Different critical bands (a.k.a. channels) are excited in different ways."),
+    #   shiny::plotOutput("plot_channel_wave_form"),
+    #   shiny::sliderInput(inputId = "channel_wave_forms_channel_num", "Channel number",
+    #                      min = 1, max = 47, value = 25, step = 1),
+    #   shiny::actionButton("play_channel_wave_form", "Play")
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Channel envelopes", status = "primary",
+    #   shiny::tags$p("We extract the envelopes of the excitation patterns for each channel."),
+    #   shiny::plotOutput("plot_channel_envelope"),
+    #   shiny::sliderInput(inputId = "channel_envelopes_channel_num", "Channel number",
+    #                      min = 1, max = 47, value = 25, step = 1)
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Filtered channel envelopes", status = "primary",
+    #   shiny::tags$p("These amplitude modulations are filtered to prioritise the modulation frequencies that contribute most towards roughness."),
+    #   shiny::plotOutput("plot_filtered_channel_envelope"),
+    #   shiny::sliderInput(inputId = "filtered_channel_envelopes_channel_num", "Channel number",
+    #               min = 1, max = 47, value = 25, step = 1)
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Modulation indices", status = "primary",
+    #   shiny::tags$p("The modulation index of each channel constitutes the RMS amplitude modulation as a fraction of the RMS amplitude of the total waveform."),
+    #   shiny::plotOutput("plot_modulation_indices")
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Phase impact factors", status = "primary",
+    #   shiny::tags$p("Phase impact factors describe the amount of correlation between the envelope of the current critical band and the envelopes of adjacent critical bands. Higher correlation is thought to yield greater roughness."),
+    #   shiny::plotOutput("plot_phase_impact_factors")
+    # )),
+    # shiny::fluidRow(shinydashboard::box(
+    #   title = "Specific roughnesses", status = "primary",
+    #   shiny::tags$p("The roughness contribution of each critical band is estimated as a function of modulation index, phase impact factor, and pitch height of the critical band. These are then summed to give the total roughness value."),
+    #   shiny::plotOutput("plot_specific_roughnesses")
+    # ))
   )
+
 
   # Define server logic required to draw a histogram
   server <- function(input, output) {
@@ -166,9 +205,11 @@ wang_app <- function() {
     output$plot_specific_roughnesses <- shiny::renderPlot(
       plot_specific_roughnesses_wang(state$analysis$specific_roughnesses))
 
-    output$total_roughness <- shinydashboard::renderInfoBox(shinydashboard::infoBox(
-      title = "Total roughness", fill = TRUE,
-      value = state$analysis$total_roughness %>% round(digits = 5)))
+    output$total_roughness <- shiny::renderUI(
+      shiny::p("Output:",
+               shiny::strong(state$analysis$total_roughness %>%
+                               round(digits = 5)),
+               style = "padding: 15px; font-size: 12pt"))
   }
 
   # Run the application
