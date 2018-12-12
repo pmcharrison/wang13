@@ -10,33 +10,41 @@ roughness_wang <- function(
   frequency_Hz,
   level_dB,
   detail = FALSE,
-  include_phase_impact_factors = FALSE
+  include_phase_impact_factors = FALSE,
+  msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ", msg)
 ) {
   assertthat::assert_that(length(frequency_Hz) == length(level_dB))
 
+  msg(1, 7, "Ear transmission...")
   level_dB_filtered <- level_dB - ear_transmission(frequency_Hz)
 
+  msg(2, 7, "Channel excitation levels...")
   channel_sound_excitation_levels <- get_channel_sound_excitation_levels(
     frequency_Hz = frequency_Hz,
     level_dB_filtered = level_dB_filtered
   )
+
   # <channel_wave_forms> is a list of numeric vectors corresponding to the
   # y values of the waveforms for each channel for time in [0s, 1s].
   # The units of y is amplitude ratios relative to the reference sound amplitude.
+  msg(3, 7, "Channel waveforms...")
   channel_wave_forms <- purrr::map(.x = channel_sound_excitation_levels,
                                    .f = get_channel_wave_form,
                                    frequency_Hz)
 
   # These are waveforms corresponding to the signal envelopes
+  msg(4, 7, "Channel envelopes...")
   channel_envelopes <- purrr::map(.x = channel_wave_forms,
                                   .f = get_channel_envelope)
 
   # The channel envelopes are filtered to account for the different roughness
   # contributions of different modulation frequencies
+  msg(5, 7, "Filtering channel envelopes...")
   filtered_channel_envelopes <- purrr::map2(.x = seq_along(channel_envelopes),
                                             .y = channel_envelopes,
                                             .f = filter_channel_envelope)
 
+  msg(6, 7, "Computing roughness...")
   modulation_indices <- purrr::map2_dbl(.x = filtered_channel_envelopes,
                                         .y = channel_wave_forms,
                                         .f = get_modulation_index)
@@ -57,4 +65,3 @@ roughness_wang <- function(
     compile_detail(as.list(environment())) else
       total_roughness
 }
-
