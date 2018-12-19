@@ -55,10 +55,16 @@ This function should accept three arguments:
 \code{n}, an integer identifying the current position in the pipeline,
 \code{N}, an integer identifying the length of the pipeline,
 and \code{msg}, a string providing a longer-format description
-of the current position in the pipeline.}
+of the current position in the pipeline.
+Pass \code{NULL} to disable progress updates.}
 
 \item{...}{Additional parameters to pass to
-\code{\link[hrep]{fr_sparse_spectrum}}.}
+\code{\link[hrep]{fr_sparse_spectrum}}.
+\itemize{
+\item \code{num_harmonics}: Number of harmonics to use when expanding
+chord tones into their implied harmonics.
+\item \code{roll_off}: Rate of amplitude roll-off for the harmonics.
+}}
 }
 \value{
 If \code{detail == FALSE}, a numeric vector of roughnesses,

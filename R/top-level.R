@@ -30,8 +30,12 @@
 #' \code{N}, an integer identifying the length of the pipeline,
 #' and \code{msg}, a string providing a longer-format description
 #' of the current position in the pipeline.
+#' Pass \code{NULL} to disable progress updates.
 #' @param ... Additional parameters to pass to
 #' \code{\link[hrep]{fr_sparse_spectrum}}.
+#' * \code{num_harmonics}: Number of harmonics to use when expanding
+#' chord tones into their implied harmonics.
+#' * \code{roll_off}: Rate of amplitude roll-off for the harmonics.
 #' @return If \code{detail == FALSE}, a numeric vector of roughnesses,
 #' otherwise a list containing detailed algorithm output.
 #' @references
@@ -84,6 +88,7 @@ roughness_wang.fr_sparse_spectrum <- function(
 ) {
   frequency_Hz <- hrep::freq(x)
   level_dB <- hrep::amplitude_to_dB(hrep::amp(x), unit_amplitude_in_dB)
+  if (is.null(msg)) msg <- function(...) NULL
 
   msg(1, 6, "Ear transmission...")
   level_dB_filtered <- level_dB - ear_transmission(frequency_Hz)
