@@ -20,7 +20,8 @@ Suggests:
     cowplot,
     shiny,
     shinyjs,
-    shinydashboard
+    shinydashboard,
+    testthat
 RdMacros: Rdpack
 RoxygenNote: 6.1.0
 Remotes: pmcharrison/hrep

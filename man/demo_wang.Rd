@@ -4,7 +4,12 @@
 \alias{demo_wang}
 \title{Wang et al. (2013) interactive demo}
 \usage{
-demo_wang()
+demo_wang(audio = TRUE)
+}
+\arguments{
+\item{audio}{(Scalar logical) Whether to enable playback controls
+(currently the playback controls don't work when the app is hosted
+on a remote server).}
 }
 \description{
 Launches an interactive demo of Wang et al.'s (2013) roughness model.

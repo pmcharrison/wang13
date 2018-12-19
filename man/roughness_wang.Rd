@@ -2,17 +2,39 @@
 % Please edit documentation in R/top-level.R
 \name{roughness_wang}
 \alias{roughness_wang}
+\alias{roughness_wang.default}
+\alias{roughness_wang.fr_sparse_spectrum}
 \title{Wang et al.'s (2013) roughness model}
 \usage{
-roughness_wang(frequency_Hz, level_dB, detail = FALSE,
-  include_phase_impact_factors = FALSE, msg = function(n, N, msg) if
-  (interactive()) message(n, "/", N, ": ", msg))
+roughness_wang(x, detail = FALSE, include_phase_impact_factors = FALSE,
+  unit_amplitude_in_dB = 60, msg = function(n, N, msg) if
+  (interactive()) message(n, "/", N, ": ", msg), ...)
+
+\method{roughness_wang}{default}(x, detail = FALSE,
+  include_phase_impact_factors = FALSE, unit_amplitude_in_dB = 60,
+  msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ",
+  msg), ...)
+
+\method{roughness_wang}{fr_sparse_spectrum}(x, detail = FALSE,
+  include_phase_impact_factors = FALSE, unit_amplitude_in_dB = 60,
+  msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ",
+  msg))
 }
 \arguments{
-\item{frequency_Hz}{(Numeric vector) Input frequencies (Hz).}
-
-\item{level_dB}{(Numeric vector) Input sound levels (dB), of the same length as
-\code{frequency_Hz}.}
+\item{x}{Object to analyse,
+which will be coerced to an object of class
+\code{\link[hrep]{fr_sparse_spectrum}}.
+Various input types are possible:
+\itemize{
+\item Numeric vectors will be treated as vectors of MIDI note numbers,
+which will be expanded into their implied harmonics.
+\item A two-element list can be used to define a harmonic spectrum.
+The first element should be a vector of frequencies in Hz,
+the second a vector of amplitudes.
+\item The function also accepts classes from the \code{hrep} package,
+such as produced by \code{\link[hrep]{pi_chord}()} and
+\code{\link[hrep]{fr_sparse_spectrum}()}.
+}}
 
 \item{detail}{(Logical scalar) Whether to return detailed output information.}
 
@@ -22,24 +44,32 @@ Set to \code{TRUE} to recover the original specifications of Wang et al. (2013).
 However, disabling this feature (by leaving the parameter at \code{FALSE})
 seems to result in better estimation of perceptual consonance.}
 
+\item{unit_amplitude_in_dB}{(Numeric scalar)
+Determines the decibel level of a partial with amplitude 1.
+When the input is a musical chord,
+this will correspond to the decibel level of the fundamental frequencies
+of each chord tone.}
+
 \item{msg}{Function to be called to give progress updates.
 This function should accept three arguments:
 \code{n}, an integer identifying the current position in the pipeline,
 \code{N}, an integer identifying the length of the pipeline,
 and \code{msg}, a string providing a longer-format description
 of the current position in the pipeline.}
+
+\item{...}{Additional parameters to pass to
+\code{\link[hrep]{fr_sparse_spectrum}}.}
 }
 \value{
 If \code{detail == FALSE}, a numeric vector of roughnesses,
 otherwise a list containing detailed algorithm output.
 }
 \description{
-Gets the roughness of an acoustic spectrum according to the model of Wang et al. (2013).
+Gets the roughness of a sonority according to the model of Wang et al. (2013).
 }
 \note{
 This implementation is designed for sparse input spectra, that is,
-when \code{frequency_Hz} and \code{level_dB} are both relatively
-short vectors.
+spectra containing only a few (< 100) components.
 }
 \references{
 \insertRef{Wang2013}{wang13}
