@@ -3,7 +3,7 @@
 #' Gets the roughness of a sonority according to the model of Wang et al. (2013).
 #' @param x Object to analyse,
 #' which will be coerced to an object of class
-#' \code{\link[hrep]{fr_sparse_spectrum}}.
+#' \code{\link[hrep]{sparse_fr_spectrum}}.
 #' Various input types are possible:
 #' * Numeric vectors will be treated as vectors of MIDI note numbers,
 #' which will be expanded into their implied harmonics.
@@ -12,7 +12,7 @@
 #' the second a vector of amplitudes.
 #' * The function also accepts classes from the \code{hrep} package,
 #' such as produced by \code{\link[hrep]{pi_chord}()} and
-#' \code{\link[hrep]{fr_sparse_spectrum}()}.
+#' \code{\link[hrep]{sparse_fr_spectrum}()}.
 #' @param detail (Logical scalar) Whether to return detailed output information.
 #' @param include_phase_impact_factors (Logical scalar)
 #' Whether to include phase impact factors in roughness computation.
@@ -32,7 +32,7 @@
 #' of the current position in the pipeline.
 #' Pass \code{NULL} to disable progress updates.
 #' @param ... Additional parameters to pass to
-#' \code{\link[hrep]{fr_sparse_spectrum}}.
+#' \code{\link[hrep]{sparse_fr_spectrum}}.
 #' * \code{num_harmonics}: Number of harmonics to use when expanding
 #' chord tones into their implied harmonics.
 #' * \code{roll_off}: Rate of amplitude roll-off for the harmonics.
@@ -71,13 +71,13 @@ roughness_wang.default <- function(
       message(n, "/", N, ": ", msg),
   ...
 ) {
-  x <- hrep::fr_sparse_spectrum(x, ...)
+  x <- hrep::sparse_fr_spectrum(x, ...)
   do.call(roughness_wang, as.list(environment()))
 }
 
 #' @rdname roughness_wang
 #' @export
-roughness_wang.fr_sparse_spectrum <- function(
+roughness_wang.sparse_fr_spectrum <- function(
   x,
   detail = FALSE,
   include_phase_impact_factors = FALSE,

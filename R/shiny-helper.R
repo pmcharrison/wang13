@@ -68,7 +68,7 @@ analyse_chord <- function(x,
                           include_phase_impact_factors,
                           fundamental_dB,
                           num_harmonics) {
-  spectrum <- hrep::fr_sparse_spectrum(hrep::pi_chord(x),
+  spectrum <- hrep::sparse_fr_spectrum(hrep::pi_chord(x),
                                        num_harmonics = num_harmonics)
 
   shiny::withProgress(

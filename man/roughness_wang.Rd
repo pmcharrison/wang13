@@ -3,7 +3,7 @@
 \name{roughness_wang}
 \alias{roughness_wang}
 \alias{roughness_wang.default}
-\alias{roughness_wang.fr_sparse_spectrum}
+\alias{roughness_wang.sparse_fr_spectrum}
 \title{Wang et al.'s (2013) roughness model}
 \usage{
 roughness_wang(x, detail = FALSE, include_phase_impact_factors = FALSE,
@@ -15,7 +15,7 @@ roughness_wang(x, detail = FALSE, include_phase_impact_factors = FALSE,
   msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ",
   msg), ...)
 
-\method{roughness_wang}{fr_sparse_spectrum}(x, detail = FALSE,
+\method{roughness_wang}{sparse_fr_spectrum}(x, detail = FALSE,
   include_phase_impact_factors = FALSE, unit_amplitude_in_dB = 60,
   msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ",
   msg))
@@ -23,7 +23,7 @@ roughness_wang(x, detail = FALSE, include_phase_impact_factors = FALSE,
 \arguments{
 \item{x}{Object to analyse,
 which will be coerced to an object of class
-\code{\link[hrep]{fr_sparse_spectrum}}.
+\code{\link[hrep]{sparse_fr_spectrum}}.
 Various input types are possible:
 \itemize{
 \item Numeric vectors will be treated as vectors of MIDI note numbers,
@@ -33,7 +33,7 @@ The first element should be a vector of frequencies in Hz,
 the second a vector of amplitudes.
 \item The function also accepts classes from the \code{hrep} package,
 such as produced by \code{\link[hrep]{pi_chord}()} and
-\code{\link[hrep]{fr_sparse_spectrum}()}.
+\code{\link[hrep]{sparse_fr_spectrum}()}.
 }}
 
 \item{detail}{(Logical scalar) Whether to return detailed output information.}
@@ -59,7 +59,7 @@ of the current position in the pipeline.
 Pass \code{NULL} to disable progress updates.}
 
 \item{...}{Additional parameters to pass to
-\code{\link[hrep]{fr_sparse_spectrum}}.
+\code{\link[hrep]{sparse_fr_spectrum}}.
 \itemize{
 \item \code{num_harmonics}: Number of harmonics to use when expanding
 chord tones into their implied harmonics.
