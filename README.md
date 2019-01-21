@@ -10,6 +10,7 @@ status](https://travis-ci.org/pmcharrison/wang13.svg?branch=master)](https://tra
 status](https://ci.appveyor.com/api/projects/status/github/pmcharrison/wang13?branch=master&svg=true)](https://ci.appveyor.com/project/pmcharrison/wang13)
 [![Coverage
 status](https://coveralls.io/repos/github/pmcharrison/wang13/badge.svg)](https://coveralls.io/r/pmcharrison/wang13?branch=master)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2545764.svg)](https://doi.org/10.5281/zenodo.2545764)
 
 The `wang13` R package implements Wang et al.’s (2013) roughness model.
 
