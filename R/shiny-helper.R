@@ -2,19 +2,6 @@ format_chord <- function(x) {
   paste(x, collapse = " ")
 }
 
-# draw_chord <- function(x, sharps = TRUE, dpi = 200) {
-#   files <- list(
-#     lily = tempfile(fileext = ".ly"),
-#     png = tempfile(fileext = ".png")
-#   )
-#   seq <- lilypondR::make_chord_sequence(list(x), sharps = sharps)
-#   lilypondR::write_lilypond(seq, path = files$lily)
-#   lilypondR::convert_ly_to_png(ly_path = files$lily,
-#                                png_path_sans_ext = gsub("\\.png", "", files$png),
-#                                dpi = 200)
-#   files$png
-# }
-
 enter_new_chord <- function(text, state, num_harmonics) {
   tryCatch({
     set_chord(hrep::pc_chord(text),
@@ -148,7 +135,7 @@ shiny_ui_tab_0 <- function() {
                     "Roughness modelling based on human auditory perception for",
                     "sound quality evaluation of vehicle interior noise.",
                     shiny::tags$em("Journal of Sound and Vibration"),
-                    "332(16), 3893–3904.",
+                    "332(16), 3893-3904.",
                     shiny::tags$a(href = "https://doi.org/10.1016/j.jsv.2013.02.030")
                     )
     )

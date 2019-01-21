@@ -18,7 +18,7 @@ roughness_wang(x, detail = FALSE, include_phase_impact_factors = FALSE,
 \method{roughness_wang}{sparse_fr_spectrum}(x, detail = FALSE,
   include_phase_impact_factors = FALSE, unit_amplitude_in_dB = 60,
   msg = function(n, N, msg) if (interactive()) message(n, "/", N, ": ",
-  msg))
+  msg), ...)
 }
 \arguments{
 \item{x}{Object to analyse,

@@ -3,7 +3,13 @@
 
 # wang13: Wang et al.’s (2013) Roughness Model
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Travis build
+status](https://travis-ci.org/pmcharrison/wang13.svg?branch=master)](https://travis-ci.org/pmcharrison/wang13)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/pmcharrison/wang13?branch=master&svg=true)](https://ci.appveyor.com/project/pmcharrison/wang13)
+[![Coverage
+status](https://coveralls.io/repos/github/pmcharrison/wang13/badge.svg)](https://coveralls.io/r/pmcharrison/wang13?branch=master)
 
 The `wang13` R package implements Wang et al.’s (2013) roughness model.
 
@@ -25,14 +31,12 @@ Higher scores correspond to greater roughness.
 library(wang13)
 
 # Octave
-roughness_wang(frequency_Hz = c(261.6, 523.3),
-               level_dB = c(60, 60))
-#> [1] 0.008891381
+roughness_wang(c(60, 72))
+#> [1] 0.2005657
 
 # Semitone
-roughness_wang(frequency_Hz = c(261.6, 277.2),
-               level_dB = c(60, 60))
-#> [1] 0.2715607
+roughness_wang(c(60, 61))
+#> [1] 1.124933
 ```
 
 ## References

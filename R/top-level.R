@@ -84,7 +84,8 @@ roughness_wang.sparse_fr_spectrum <- function(
   unit_amplitude_in_dB = 60,
   msg = function(n, N, msg)
     if (interactive())
-      message(n, "/", N, ": ", msg)
+      message(n, "/", N, ": ", msg),
+  ...
 ) {
   frequency_Hz <- hrep::freq(x)
   level_dB <- hrep::amplitude_to_dB(hrep::amp(x), unit_amplitude_in_dB)
