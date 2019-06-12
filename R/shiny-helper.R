@@ -60,8 +60,7 @@ analyse_chord <- function(x,
 
   shiny::withProgress(
     roughness_wang(
-      frequency_Hz = hrep::freq(spectrum),
-      level_dB = hrep::amplitude_to_dB(hrep::amp(spectrum), fundamental_dB),
+      x = spectrum,
       include_phase_impact_factors = include_phase_impact_factors,
       detail = TRUE,
       msg = function(n, N, msg) shiny::setProgress(n, msg)
