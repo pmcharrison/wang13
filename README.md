@@ -14,6 +14,8 @@ status](https://coveralls.io/repos/github/pmcharrison/wang13/badge.svg)](https:/
 
 The `wang13` R package implements Wang et al.’s (2013) roughness model.
 
+Try an interactive demo [here](http://shiny.pmcharrison.com/wang13/)\!
+
 ## Installation
 
 Within R, you can install the current version of `wang13` from Github as
